@@ -18,11 +18,12 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
+        <Router showNavigationBar={false}>
           <Modal>
             <Stack key="root">
               
               <Scene key="mainScreen"
+                hideNavBar={1} 
                 component={MainScreen}
                 initial
                 // title="Main Screen"
@@ -30,6 +31,7 @@ export default class App extends React.Component {
 
                 {/* <Text> hi</Text> */}
               <Scene key="patientProfile"
+                hideNavBar={1} 
                 component={PatientProfileScreen}
                 />
 
@@ -57,6 +59,7 @@ export default class App extends React.Component {
                 />
             <Scene key="activeSession"
                 // modal
+                hideNavBar={1} 
                 component={ActiveSessionScreen}
                 />
           </Modal>

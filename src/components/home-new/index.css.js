@@ -32,86 +32,16 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#188fff'
     },
-    patientDescriptionContainer: {
-        flex: 8,
-        // marginTop: '1%',
-        height: '90%',
+    plHeaderContainer: {
+        width: '100%',
+        height: '40%',
+        backgroundColor: 'white'
+    },
+    plHeaderWrapper: {
+        backgroundColor: '#40a9ff',
+        width: '100%',
         flexDirection: 'column',
-        borderColor: '#e8e8e8', 
-        borderStyle: 'solid',
-        borderBottomWidth: 1,
-        alignSelf: 'flex-end',
-        justifyContent: 'center'
-    },
-    patientImage: {
-        width: 45, 
-        height: 45,
-        borderColor: '#e8e8e8',
-        borderRadius: 22,
-        borderWidth: 1,
-    },
-    patientImageContainer: {
-        flex: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    patientListHeaderContainer: {
-        // padding: 8,
-        height: 60,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    patientListHeader: {
-        height: '100%',
-        width: '95%',
-        // borderBottomWidth: 1,
-        // borderColor: '#e8e8e8', 
-        // borderStyle: 'solid',
-        paddingTop: 20,
-        paddingLeft: 4,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    patientListHeaderText: {
-        height: '100%',
-        width: '100%',
-        borderBottomWidth: 1,
-        borderColor: '#e8e8e8', 
-        fontWeight: '600',
-        fontSize: 16
-    },
-    patientListItemWrapper: {
-        height: 50,
-        // borderBottomWidth: 4,
-        // borderTopWidth: 4,
-    },
-    patientListItem: {
-        // padding: '4%',
-        flexDirection: 'row',
-        height: '100%',
-
-        // paddingRight: '4%',
-    },
-    patientListWrapper: {
-        // flex: 9,
-        height: '80%',
-        width: '100%',
-        backgroundColor: 'white',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: '#e8e8e8', 
-        borderStyle: 'solid'
-    },
-    patientName: {
-        // opacity: 0.9,
-        flex: 1
-    },
-    patientSymptoms: {
-        flex:1 ,
-        opacity: 0.6,
-        fontSize: 12,
-        color: 'black',
-        // backgroundColor: 'blue'
+        marginTop: 100
     },
     startButtonContainer: {
         // flex: 1.2,

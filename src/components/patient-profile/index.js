@@ -25,7 +25,7 @@ class PatientProfile extends React.Component {
                 <Container style={{height: 400}}>
                     {/* <Text> PATIENT PROFILE </Text> */}
 
-                    <Header span>
+                    {/* <Header span>
                         <Left>
                             <Button 
                                 transparent
@@ -35,7 +35,7 @@ class PatientProfile extends React.Component {
                         </Left>
 
                         <Body>
-                            {/* Profile header */}
+                            {/* Profile header 
                             <Grid>
                                 <Row size={2}>
                                     <Col style={{width: 70}}>
@@ -49,9 +49,6 @@ class PatientProfile extends React.Component {
                                     </Col>
                                 </Row>
 
-                                {/* <Row size={1}>
-                                    
-                                </Row> */}
                             </Grid>
                             
                         </Body>
@@ -61,7 +58,7 @@ class PatientProfile extends React.Component {
                         </Right>
 
 
-                    </Header>
+                    </Header> */}
 
                     <Tabs>
                         <Tab

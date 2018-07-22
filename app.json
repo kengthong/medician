@@ -1,5 +1,18 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "Medician",
+    "slug": "medician",
+    "description": "Handy app for clinic doctors",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "com.mub.medician",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.yourcompany.yourappname"
+    }
+
   }
 }

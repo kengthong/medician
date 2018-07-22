@@ -32,11 +32,6 @@ class PatientList extends React.Component {
     
         return (
             <Container>
-                <Header hasSegment>
-                    <Body>
-                        <Title> Patients </Title>
-                    </Body>
-                </Header>
                 <Segment
                             style={{}} >
                     <Button 
