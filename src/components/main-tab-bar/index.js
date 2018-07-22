@@ -11,6 +11,7 @@ import getTheme from '../../../native-base-theme/components';
 import commonColor from '../../../native-base-theme/variables/commonColor';
 
 import HomeComponent from '../home';
+// import HomeComponent from '../home-new';
 import PatientList from '../patients-list/index';
 
 
@@ -20,14 +21,42 @@ class MainTabBar extends React.Component {
     render() {
 
         const { patients } = this.state;
+        const { height } = this.props;
 
         return (
             <StyleProvider
                 style={getTheme(commonColor)}
                 >
-                <View style={{height: '100%'}}>
+                <View style={{height: height}}>
                     
                     <TabNavigator tabBarStyle={styles.tabBar}>
+
+                        <TabNavigator.Item
+                            name="patients"  
+                            selected={this.state.selectedTab === 'Patients List'}
+                            tabStyle={styles.tabItem}
+                            title="Patients"
+                            titleStyle={styles.tabTitle}
+                            renderIcon={() => 
+                                <Icon
+                                    name='ios-people'
+                                    style={styles.tabIcon}
+                                    />
+                            }
+                            renderSelectedIcon={() => 
+                                <Icon
+                                    name='ios-people'
+                                    style={styles.tabIconSelected}
+                                    />
+                            }
+                            // badgeText={patients.length}
+                            onPress={() => this.setState({ selectedTab: 'Patients List'})}>
+
+                            <PatientList 
+                                patients={patients}
+                                />
+
+                        </TabNavigator.Item>
 
                         <TabNavigator.Item
                             name="home"  
@@ -37,12 +66,12 @@ class MainTabBar extends React.Component {
                             renderIcon={() => 
                                 <Icon 
                                     style={styles.tabIcon}
-                                    name="md-home" />
+                                    name="ios-home" />
                             }
                             renderSelectedIcon={ () => 
                                 <Icon 
                                     style={styles.tabIconSelected}
-                                    name="md-home" />
+                                    name="ios-home" />
                             }
                             // badgeText="1"
                             onPress={() => {
@@ -54,60 +83,6 @@ class MainTabBar extends React.Component {
                         </TabNavigator.Item>
 
                         <TabNavigator.Item
-                            name="patients"  
-                            selected={this.state.selectedTab === 'Patients List'}
-                            tabStyle={styles.tabItem}
-                            title="Patients"
-                            titleStyle={styles.tabTitle}
-                            renderIcon={() => 
-                                <Icon
-                                    name='people'
-                                    active={true}
-                                    color='black'
-                                    style={styles.tabIcon}
-                                    />
-                            }
-                            renderSelectedIcon={() => 
-                                <Icon
-                                    name='people'
-                                    style={styles.tabIconSelected}
-                                    />
-                            }
-                            badgeText={patients.length}
-                            onPress={() => this.setState({ selectedTab: 'Patients List'})}>
-
-                            <PatientList 
-                                patients={patients}
-                                />
-
-                        </TabNavigator.Item>
-
-
-                        <TabNavigator.Item
-                            name="start"  
-                            selected={this.state.selectedTab === 'newConsultation'}
-                            tabStyle={styles.tabItem}
-                            title="Start new"
-                            titleStyle={styles.tabTitle}
-                            renderIcon={() => 
-                                <Icon
-                                    name='ios-radio-button-on-outline'
-                                    style={styles.tabIconStart}
-                                    />
-                            }
-                            renderSelectedIcon={() => 
-                                <Icon
-                                    name='ios-radio-button-on-outline'
-                                    style={styles.tabIconStart}
-                                    />
-                            }
-                            onPress={() => Actions.activeSession({ patient: patients[0] }) }>
-
-                            <Text> test </Text>
-
-                        </TabNavigator.Item>
-
-                        <TabNavigator.Item
                             name="history"  
                             selected={this.state.selectedTab === 'history'}
                             tabStyle={styles.tabItem}
@@ -115,12 +90,12 @@ class MainTabBar extends React.Component {
                             titleStyle={styles.tabTitle}
                             renderIcon={() => 
                                 <Icon 
-                                    name="md-calendar"
+                                    name="ios-calendar"
                                     style={styles.tabIcon}/>
                             }
                             renderSelectedIcon={() => 
                                 <Icon 
-                                    name="md-calendar"
+                                    name="ios-calendar"
                                     style={styles.tabIconSelected}/>
                             }
                             // badgeText="2"
@@ -135,7 +110,7 @@ class MainTabBar extends React.Component {
 
                         </TabNavigator.Item>
 
-                        <TabNavigator.Item
+                        {/* <TabNavigator.Item
                             name="setting"  
                             selected={this.state.selectedTab === 'setting'}
                             tabStyle={styles.tabItem}
@@ -143,12 +118,12 @@ class MainTabBar extends React.Component {
                             titleStyle={styles.tabTitle}
                             renderIcon={() => 
                                 <Icon 
-                                    name="md-settings"
+                                    name="ios-settings"
                                     style={styles.tabIcon}/>
                             }
                             renderSelectedIcon={() => 
                                 <Icon 
-                                    name="md-settings"
+                                    name="ios-settings"
                                     style={styles.tabIconSelected}/>
                             }
                             // badgeText="2"
@@ -158,7 +133,7 @@ class MainTabBar extends React.Component {
                                 <Text>SETTING</Text>
                             </View>
 
-                        </TabNavigator.Item>
+                        </TabNavigator.Item> */}
 
                     </TabNavigator>
 

@@ -2,16 +2,23 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     tabBar: {
-        height: 60,
-        backgroundColor: 'white',
-        borderTopWidth: 0.5,
         borderColor: '#E5E5E5',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '100%',
+        height: 50,
+        backgroundColor: 'white',
+        borderTopWidth: 0.5,
+        marginBottom: 10,
+    },
+    tabBarRow: {
+        
+        justifyContent: 'center'
     },
     tabIcon: {
         color: '#3C3C3C',
-        height: 25
+        height: 25,
+        width: 25
     },
     tabIconStart: {
         color: 'red',
@@ -20,7 +27,8 @@ const styles = StyleSheet.create({
     },
     tabIconSelected: {
         color: '#2D7BF5',
-        height: 25
+        height: 25,
+        width: 25
     },
     tabItem: {
         alignItems: 'center',

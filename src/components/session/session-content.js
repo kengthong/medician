@@ -9,8 +9,10 @@ import { Button,
     Textarea,
     
 } from 'native-base';
+import axios from 'axios';
 
-import { Asset, Audio, Font, Video, Permissions } from 'expo';
+import { Asset, Audio, FileSystem, Font, Video, Permissions, Sound} from 'expo';
+import {RECORDING_OPTIONS_SET_HIGH_QUALITY, Base64} from './config';
 
 class SessionContent extends React.Component {
     render() {
@@ -236,15 +238,21 @@ class SessionContent extends React.Component {
         } else {
           console.log("IS RECORDING STATE", this.state.isRecording);
           this._stopPlaybackAndBeginRecording();
-          this.activateFakeResponse()
+        //   this.activateFakeResponse()
         }
     };
 
     _startRecording = async () => {
         let recording = new Audio.Recording();
-        await recording.prepareToRecordAsync(Expo.Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+        console.log('eeeeexpo : ' , RECORDING_OPTIONS_SET_HIGH_QUALITY)
+        console.log('eexpo 1 : ' , Expo.Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY)
+        // await recording.prepareToRecordAsync(Expo.Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+        await recording.prepareToRecordAsync(RECORDING_OPTIONS_SET_HIGH_QUALITY);
+            
         recording.setOnRecordingStatusUpdate(this._updateScreenForRecordingStatus);
 
+
+        recording.startAsync();
         setTimeout(() => {
 
             if(this.state.isRecording) {
@@ -257,7 +265,7 @@ class SessionContent extends React.Component {
             }
 
 
-        }, 5000 )
+        }, 3000 )
     }
 
     _sendAudioInIntervals = async (recording) => {
@@ -278,12 +286,19 @@ class SessionContent extends React.Component {
         //       }
         // )
 
-        this.uploadAudioAsync(uri)
-        .then( res => {
-            console.log('res =',  res)
+        console.log("called")
 
-            //if Success, call _startRecording again
-        })
+        setTimeout(() => {
+            this.uploadAudioAsync(uri)
+        }, 100)
+        // .then( res => console.log('any res = ' , res))
+        // .catch( err => console.log("error getting response " , err))
+        // .then( res => {
+        //     console.log('res send api =',  res.data)
+
+        //     //if Success, call _startRecording again
+        // })
+        // .catch( err => console.log("send api error" , err))
 
         return true;
     }
@@ -305,11 +320,12 @@ class SessionContent extends React.Component {
 
         const recording = new Audio.Recording();
         console.log("RECORDING", recording);
-        await recording.prepareToRecordAsync(Expo.Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-        recording.setOnRecordingStatusUpdate(this._updateScreenForRecordingStatus);
+        this._startRecording();
+        // await recording.prepareToRecordAsync(Expo.Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+        // recording.setOnRecordingStatusUpdate(this._updateScreenForRecordingStatus);
 
-        this.recording = recording;
-        await this.recording.startAsync(); // Will call callback to update the screen.
+        // this.recording = recording;
+        // await this.recording.startAsync(); // Will call callback to update the screen.
         this.setState({
             isLoading: false,
         });
@@ -383,9 +399,45 @@ class SessionContent extends React.Component {
         }
     };
 
+    getBase64 = (img, callback) => {
+        console.log("ran base 64")
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+
+        console.log('data = ' , reader.readAsDataURL(img))
+    }
+
+    getData = (audioFile, callback) => {
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            let data = event.target.result.split(','),
+            decodedImageData = Base64.btoa(data[1]);
+            // console.log('any decoded image data = "  ' , decodedImageData)
+            callback(decodedImageData);
+        }
+
+        // console.log("uri or audio file = " , audioFile)
+        reader.readAsDataURL(audioFile);
+    }
+
+    test = (uri) => {
+        // FileSystem.readAsStringAsync(uri)
+        // .then( res => console.log('neww file = ' , res))
+
+
+        // FileSystem.getInfoAsync(uri, data => )
+        console.log('btoa = ' , Base64.btoa(uri))
+        return Base64.btoa(uri);
+            // .then( res => console.log('info ' = res) )
+        // console.log("new file = " , newFile)
+    }
+
     uploadAudioAsync = async (uri) => {
         console.log("Uploading " + uri);
-        let apiUrl = 'http://YOUR_SERVER_HERE/upload';
+        console.log('type of ' , typeof uri)
+        // let apiUrl = 'https://8gpu2xeyl7.execute-api.ap-southeast-1.amazonaws.com/api/v1/submit-audio-all-types';
+        let apiUrl = 'http://api.teezee.sg:8080/api/cart/orbital';
         let uriParts = uri.split('.');
         let fileType = uriParts[uriParts.length - 1];
       
@@ -395,18 +447,61 @@ class SessionContent extends React.Component {
           name: `recording.${fileType}`,
           type: `audio/x-${fileType}`,
         });
+
+        let source = uri;
+        let data = this.getData(uri);
+        console.log('data = ' , data)
+
+        const base64Audio = this.test( data )
+
+        // .then( res => console.log('neww file = ' , res))
+        let testData = this.getData(uri);
+
+        // console.log('base64audio = ' , base64Audio);
+        // let options = {
+        //   method: 'POST',
+        //   body: {
+        //       "audio": base64Audio,
+        //   },
+        //   headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'multipart/form-data',
+        //   },
+        // };
       
-        let options = {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-        };
-      
-        console.log("POSTing " + uri + " to " + apiUrl);
-        return fetch(apiUrl, options);
+        // console.log("POSTing " + uri + " to " + apiUrl);
+        // fetch(apiUrl, options)
+        // .then( res => console.log("new res = " , res ))
+        // // .then( blob => console.log("blob = " , blob))
+        // .catch( err => console.log('catch err ' , err))
+
+        axios({
+            url: 'http://api.teezee.sg:8080/api/cart/orbital', 
+            // url: 'https://8gpu2xeyl7.execute-api.ap-southeast-1.amazonaws.com/api/v1/submit-audio-all-types',
+            method: 'post',
+            data: {
+                audio: formData
+            }
+        })
+        .then(res => console.log("res.DATA = " , res))
+        .catch( err => console.log("error rrrr = " , err))
+        // axios.post( 'https://8gpu2xeyl7.execute-api.ap-southeast-1.amazonaws.com/api/v1/submit-audio-all-types' ,
+        //     // url: 'https://8gpu2xeyl7.execute-api.ap-southeast-1.amazonaws.com/api/v1/submit-audio-all-types',
+        //     // method: 'post',
+        //     // method: 'get',
+        //     // withCredentials: true,
+        //     {audio: formData}
+        //     // data: {
+        //     //     formData
+        //     // }
+        // )
+        // .then( res => console.log("any repsonse = " , res))
+        // .catch( err => console.log('catch err ' , err))
+
+        // axios
+        // .then( res => console.log("any response from server" ))
+        // return true
+
       }
       
 

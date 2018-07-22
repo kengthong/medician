@@ -18,68 +18,25 @@ import {
     Title 
 } from 'native-base';
 
-import { Actions } from 'react-native-router-flux';
-
 import getTheme from '../../../native-base-theme/components';
 import commonColor from '../../../native-base-theme/variables/commonColor';
 // import MainTabs from '../main-tabs';
 
-import styles from './styles';
+import styles from './index.css.js';
 
 
 class HomeComponent extends React.Component {
     render() {   
         const { patients } = this.state;
+        const { DayStatistics, GreetingComponent, PatientsListNew, ToDoList, TopThreePatients, StartNewConsult } = this; 
         return (
-            
-                // <Container style={{height: '100%'}}>
-
-                    /* {this.renderHeader()} */
-                    /* <MainTabs toggleActive={this.toggleActive}/> */
-                    // <Content style={{height: '100%', width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
-                        this.renderHomeContent(patients)
-                //     </Content>
-                // </Container>
-
-            // </StyleProvider>
-        )
-    }
-
-    renderHeader = () => {
-        return (
-            <Header>
-                <Left>
-                    <Button
-                        transparent
-                        >
-                        <Icon name="md-menu" />
-                    </Button>
-                </Left>
-
-                <Body style={styles.headerBody} >
-                    {/* Profile header */}
-                    <Title>Medician</Title>
-                </Body>
-
-                <Right>
-                    
-                </Right>
-
-
-            </Header>
-        )
-    }
-
-    renderHomeContent = (patients) => {
-        const { DayStatistics, GreetingComponent, PatientsList, ToDoList, TopThreePatients, StartNewConsult } = this; 
-        return (
-            <View style={styles.homeContainer}>
-                <GreetingComponent />
-                <DayStatistics />
-                <StartNewConsult patients={patients}/>
-                <PatientsList patients={patients}/>
-                {/* <ToDoList patients={patients}/> */}
-            </View>
+                <View style={styles.homeContainer}>
+                    <GreetingComponent />
+                    <PatientsListNew patients={patients}/>
+                    {/* <DayStatistics /> */}
+                    {/* <StartNewConsult /> */}
+                    {/* <ToDoList patients={patients}/> */}
+                </View>
         )
     }
 
@@ -239,6 +196,27 @@ class HomeComponent extends React.Component {
         )
     }
 
+    PatientsListNew = ({ patients }) => {
+        return (
+            <View style={styles.plHeaderWrapper}>
+                <Text>Hi</Text>
+                <View style={styles.plHeaderContainer}>
+                    <Text>Hi1</Text>
+                    <View style={styles.plHeaderCountContainer}>
+                        <Text style={styles.plHeaderCountText}> 5 </Text>
+                    </View>
+                    <View style={styles.plHeaderDescriptionContainer}>
+                        <Text style={styles.plDescriptionText}> patients in queue</Text>
+                    </View>
+                </View>
+
+                {/* <View>
+
+                </View> */}
+            </View>
+        )
+    }
+
     PatientsList = ({ patients }) => {
         return (
             <View style={styles.patientListWrapper}>
@@ -279,14 +257,10 @@ class HomeComponent extends React.Component {
         )
     }
 
-    StartNewConsult = ({patients}) => {
+    StartNewConsult = () => {
         return (
             <View style={styles.startButtonContainer}>
-
-                <TouchableOpacity 
-                    style={styles.startButton}
-                    onPress={() => Actions.activeSession({patient: patients[0]})}
-                >
+                <TouchableOpacity style={styles.startButton}>
                     <Text style={styles.startButtonText}>
                         Start next Consultation
                         {/* START NEXT CONSULTATION */}
@@ -295,84 +269,6 @@ class HomeComponent extends React.Component {
             </View>
         )
     }
-
-    ToDoList = ({patients}) => {
-        return (
-            <View style={styles.toDoListWrapper}>
-                {console.log("patientssss = " , patients)}
-                
-                <View style={styles.toDoListHeader}>
-                    <Text>Header</Text>
-                </View>
-                
-                <View style={styles.toDoListContainer}>
-                    <Text>hi</Text>
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={(patient) => {
-                            return (
-                                <View>
-                                    <Text>{patient.name}</Text>
-                                </View>
-                            )
-                        }}
-                    />
-                </View>
-            </View>
-        )
-    }
-
-    TopThreePatients = ({patients}) => {
-        
-        return (
-            <Card style={{width: '98%', height: '40%'}}>
-                <CardItem 
-                    header
-                    style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#e8e8e8',
-                        borderStyle: 'solid',
-                    }}>
-                    <Button 
-                        rounded 
-                        small
-                    > 
-                        <Text>Start next Consultation</Text> 
-                    </Button>
-                </CardItem>
-
-                    
-                <CardItem>
-                    <Text note>Patients in line</Text>
-                </CardItem>
-                
-                {patients.map( (patient, i) =>{
-                    return (
-                        <CardItem key={i}>
-                            <Thumbnail 
-                                source={{uri: patient.imgUrl}} 
-                                small
-                            />
-                            <Text>{patient.name}</Text>
-                            {console.log("top 3 = ",  patients)}
-                            <Right>
-                                <Icon name="arrow-forward" />
-                            </Right>
-                        </CardItem>
-                    )
-                })}
-                <CardItem footer>
-                    <Right>
-                        <Text note>
-                            View more
-                        </Text>
-                    </Right>
-                </CardItem>
-
-            </Card>
-        )
-    }
-
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
