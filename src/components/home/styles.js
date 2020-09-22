@@ -11,12 +11,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 24,
         fontWeight: '600',
-        fontFamily: 'Helvetica'
     },
     greetingsWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: '18%',
+        height: '15%',
         maxHeight: 100,
         width: '100%'
     },
@@ -28,90 +27,9 @@ const styles = StyleSheet.create({
     homeContainer: {
         alignItems: 'center',
         flexDirection: 'column',
-        height: 600,
+        height: '100%',
         width: '100%',
         backgroundColor: '#188fff'
-    },
-    patientDescriptionContainer: {
-        flex: 8,
-        // marginTop: '1%',
-        height: '90%',
-        flexDirection: 'column',
-        borderColor: '#e8e8e8', 
-        borderStyle: 'solid',
-        borderBottomWidth: 1,
-        alignSelf: 'flex-end',
-        justifyContent: 'center'
-    },
-    patientImage: {
-        width: 45, 
-        height: 45,
-        borderColor: '#e8e8e8',
-        borderRadius: 22,
-        borderWidth: 1,
-    },
-    patientImageContainer: {
-        flex: 2,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    patientListHeaderContainer: {
-        // padding: 8,
-        height: 60,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    patientListHeader: {
-        height: '100%',
-        width: '95%',
-        // borderBottomWidth: 1,
-        // borderColor: '#e8e8e8', 
-        // borderStyle: 'solid',
-        paddingTop: 20,
-        paddingLeft: 4,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    patientListHeaderText: {
-        height: '100%',
-        width: '100%',
-        borderBottomWidth: 1,
-        borderColor: '#e8e8e8', 
-        fontWeight: '600',
-        fontSize: 16
-    },
-    patientListItemWrapper: {
-        height: 50,
-        // borderBottomWidth: 4,
-        // borderTopWidth: 4,
-    },
-    patientListItem: {
-        // padding: '4%',
-        flexDirection: 'row',
-        height: '100%',
-
-        // paddingRight: '4%',
-    },
-    patientListWrapper: {
-        // flex: 9,
-        height: '80%',
-        width: '100%',
-        backgroundColor: 'white',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: '#e8e8e8', 
-        borderStyle: 'solid'
-    },
-    patientName: {
-        // opacity: 0.9,
-        flex: 1
-    },
-    patientSymptoms: {
-        flex:1 ,
-        opacity: 0.6,
-        fontSize: 12,
-        color: 'black',
-        // backgroundColor: 'blue'
     },
     startButtonContainer: {
         // flex: 1.2,
@@ -125,7 +43,7 @@ const styles = StyleSheet.create({
         // borderTopWidth: 1,
         // borderBottomWidth: 1,
         marginTop: 2,
-        height: 60,
+        height: '15%',
         // marginBottom: 2,
         // marginLeft: 'auto',
         // marginRight: 'auto'
@@ -151,7 +69,6 @@ const styles = StyleSheet.create({
     startButtonText: {
         color: 'white',
         // opacity: 0.9,
-        fontFamily: 'Arial',
         fontSize: 20,
         fontWeight: '600'
     },
@@ -175,16 +92,19 @@ const styles = StyleSheet.create({
         // marginRight: 'auto',
         // flex: 2
         minHeight:90,
-        height: '18%'
+        height: '20%'
     },
     statsCount: {
         fontSize: 40,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: 'white'
     },
     statsDescription: {
         fontSize: 13,
         opacity: 0.85,
+        fontWeight: '600',
         justifyContent: 'flex-start',
+        color: 'white'
     },
     statsItem: {
         flex: 1,
@@ -197,34 +117,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: '6%'
-    },
-    toDoListContainer: {
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        backgroundColor: 'lightblue',
-        width: '100%',
-
-    },
-    toDoListHeader: {
-        height: '8%',
-        borderColor: '#e8e8e8',
-        borderBottomWidth: 1,
-        justifyContent: 'center',
-        width: '95%',
-    },
-    toDoListWrapper: {
-        backgroundColor: 'white',
-        width: '100%',
-        // height: '60%',
-        // height: 100,
-        borderColor: '#e8e8e8',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        borderTopWidth: 0,
-        flex: 9,
-        flexDirection: 'column',
-        alignItems: 'center'
     },
 })
 

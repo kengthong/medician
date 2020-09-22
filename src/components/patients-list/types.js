@@ -1,1 +1,0 @@
-export const SET_PATIENTS_LIST = "SET-PATIENTS-LIST";

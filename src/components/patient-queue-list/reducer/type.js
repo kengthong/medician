@@ -1,0 +1,1 @@
+export const SET_PATIENT_QUEUE = "SET_PATIENT_QUEUE";

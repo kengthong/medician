@@ -1,88 +1,98 @@
 import { StyleSheet } from 'react-native';
 
+
+//lC = loginComponent
 const styles = StyleSheet.create({
-    cardContainer: {
-        backgroundColor: 'white',
-        height: 350,
-        borderRadius: 4,
-        // width: '85%',
-        // width: '85%',
-        // height: '40%'
-    },
-    contentContainer: {
-        width: '95%',
-        height: 400,
-        
-
-        // backgroundColor: 'lightblue',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
-        // alignContent: 'center',
-        // textAlign: 'center'
-    },
-    contentWrapper: {
-        flexDirection: 'row',
+    disabledLoginButton: {
+        backgroundColor: '#2D7BF6',
+        width: '90%',
+        height: 40,
         justifyContent: 'center',
-        alignContent: 'center',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
-        
-        // backgroundColor: 'green',
-        height: '100%',
-        width: '100%'
-        // alignContent: 'center'
+        alignItems: 'center',
+        opacity: 0.6
     },
-    formContainer: {
-        width: '100%',
-        // backgroundColor: 'lightblue'
+    fPWrapper: {
+        width: '90%',
+        height: '20%',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
     },
-    formItem:{
-        backgroundColor: '#e8e8e8',
-        paddingLeft: 16,
-        marginLeft: -2,
-        // border: '1px solid black',
-        borderRadius: 4,
-        borderWidth: 1,
-        borderColor: '#dddddd',
-        borderStyle: 'solid',
+    headerText: {
+        fontSize: 18,
+        fontWeight: '400',
 
     },
-    input: {
-        color: 'black',
-        fontSize: 14,
+    headerWrapper: {
+        height: '20%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    inputLabel: {
-        paddingLeft: 8,
-        paddingTop: 2,
-        // paddingBottom: 4
+    lCUserNameInput: {
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#e8e8e8',
+        height: 40,
+        width: '100%',
+        padding: 8
+    },
+    lCUserNameInputContainer: {
+        width: '90%',
+        paddingBottom: '2%'
+    },
+    lCPasswordInputContainer: {
+        width: '90%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderColor: '#e8e8e8',
+        flexDirection: 'row',
+    },
+    lCPasswordInput: {
+        height: 40,
+        width: '80%',
+        padding: 8
+    },
+    lCWrapper: {
+        width: '100%',
+        height: '30%',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     loginButton: {
-        height: 50,
-        width: '100%',
-        padding: 8,
-        marginTop: 20,
-        flexDirection: 'row',
-        justifyContent: 'center'
-
-    },
-    loginWrapper: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: 'rgba(82, 159, 244, 0.54)',
-        // width: '100%',
-        // height: '100%',
-    },
-    logoRow: {
-        // backgroundColor: 'white',
-        flexDirection: 'row',
+        backgroundColor: '#2D7BF6',
+        width: '90%',
+        height: 40,
         justifyContent: 'center',
-        alignContent: 'center',
+        alignItems: 'center'
+
+    },  
+    loginButtonContainer: {
+        width: '100%',
+        // marginTop: '4%',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    logoStyle: {
+    loginText: {
+        color: 'white',
+        fontWeight: '400',
+        fontSize:16
+    },
+    mainWrapper: {
         flexDirection: 'column',
-        justifyContent: 'space-around',
-        height: 200,
-        // alignContent: 'center'
+        alignItems: 'center',
+        // backgroundColor: '#3E90F7',
+        backgroundColor: 'aliceblue',
+        height: '100%',
+        width: '100%'
+    },
+    registerWrapper: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '10%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

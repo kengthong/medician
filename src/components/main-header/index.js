@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import HomeComponent from '../home';
 import HeaderBar from './header-bar';
-import PatientList from '../patients-list/index';
 
 
 class MainTabs extends React.Component {
@@ -37,14 +36,6 @@ class MainTabs extends React.Component {
             <View style={{ height: '100%'}}>
                 <HomeComponent patients={patients}/>
             </View>
-        )
-    }
-
-    renderPatientsList = (patients) => {
-        return (
-            <PatientList 
-                patients={patients}
-                />
         )
     }
 

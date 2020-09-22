@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     headerWrapper: {
         // backgroundColor: 'blue',
         // height: '100%',
-        paddingTop: 44,
+        paddingTop: 30,
         flexDirection: 'column',
         backgroundColor: '#1890ff'
     },
@@ -51,6 +51,7 @@ export const styles = StyleSheet.create({
     headerTitleRow: {
         height: '100%',
         flexDirection: 'row',
+        // paddingTop: 10
     },
     unActiveTab: {
         borderStyle: 'solid',

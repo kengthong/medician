@@ -6,23 +6,27 @@ import { Icon, StyleProvider } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
-import { _setPatients } from '../patients-list/actions';
 import getTheme from '../../../native-base-theme/components';
 import commonColor from '../../../native-base-theme/variables/commonColor';
 
+import ConsultationHistory from '../consultation-history';
 import HomeComponent from '../home';
-// import HomeComponent from '../home-new';
-import PatientList from '../patients-list/index';
+import PatientQueueList from '../patient-queue-list/index';
+import PatientList from '../patient-list';
 
+import { fetchQueueByDate } from '../patient-queue-list/actions';
+import { fetchAllConsultationHistory } from '../consultation-history/actions';
 
 import styles from './styles';
 
 class MainTabBar extends React.Component {
+
     render() {
 
         const { patients } = this.state;
         const { height } = this.props;
-
+        const { RenderTabBarContents } = this;
+        
         return (
             <StyleProvider
                 style={getTheme(commonColor)}
@@ -78,7 +82,10 @@ class MainTabBar extends React.Component {
                                 this.setState({ selectedTab: 'home'})
                                 // Actions.login()
                             }}>
-                            <HomeComponent patients={patients}/>
+                            
+                            <HomeComponent 
+                                patients={patients} 
+                            />
 
                         </TabNavigator.Item>
 
@@ -101,40 +108,11 @@ class MainTabBar extends React.Component {
                             // badgeText="2"
                             onPress={() => {
                                 this.setState({ selectedTab: 'history'})
-                                Actions.login()
                             }}>
 
-                            <View>
-                                <Text>Users</Text>
-                            </View>
+                            <ConsultationHistory />
 
                         </TabNavigator.Item>
-
-                        {/* <TabNavigator.Item
-                            name="setting"  
-                            selected={this.state.selectedTab === 'setting'}
-                            tabStyle={styles.tabItem}
-                            title="Setting"
-                            titleStyle={styles.tabTitle}
-                            renderIcon={() => 
-                                <Icon 
-                                    name="ios-settings"
-                                    style={styles.tabIcon}/>
-                            }
-                            renderSelectedIcon={() => 
-                                <Icon 
-                                    name="ios-settings"
-                                    style={styles.tabIconSelected}/>
-                            }
-                            // badgeText="2"
-                            onPress={() => this.setState({ selectedTab: 'setting'})}>
-
-                            <View>
-                                <Text>SETTING</Text>
-                            </View>
-
-                        </TabNavigator.Item> */}
-
                     </TabNavigator>
 
                 </View>
@@ -191,15 +169,22 @@ class MainTabBar extends React.Component {
                         }
                     ]
                 }
-            ]
+            ],
+            refreshing: false
         }
     }
 
+    componentDidMount() {
+        const date = moment().format('YYYY-MM-DD');
+        this.props.fetchQueueByDate(date)
+        this.props.fetchAllConsultationHistory()
+    }
+
     componentWillMount() {
-        this.props._setPatients({ 
-            patients: this.state.patients
-        })
-        console.log('anything ran?')
+        // this.props._setPatients({ 
+        //     patients: this.state.patients
+        // })
+        // console.log('anything ran?')
     }
 }
 
@@ -208,6 +193,7 @@ export default connect(
         
     }),
     dispatch => ({
-        _setPatients: ({patients}) => dispatch(_setPatients({patients}) )
+        fetchQueueByDate: (date) => dispatch(fetchQueueByDate(date)),
+        fetchAllConsultationHistory: () => dispatch(fetchAllConsultationHistory())
     })
 )(MainTabBar);

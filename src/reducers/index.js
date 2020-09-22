@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import user from './user-reducer.js';
-import { patientsReducer } from '../components/patients-list/reducers';
+import { patientQueueReducer } from '../components/patient-queue-list/reducer';
+import { consultationHistoryReducer } from '../components/consultation-history/reducer';
 
 const _reducers = {
-    patients: patientsReducer
+    consultationHistory: consultationHistoryReducer,
+    patientQueue: patientQueueReducer
 }
 
 export const reducers = combineReducers(_reducers);

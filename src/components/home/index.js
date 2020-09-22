@@ -1,28 +1,31 @@
 import React from 'react';
-import { Image, ListView, View, TouchableOpacity} from 'react-native';
-import { 
-    Badge,
-    Body,
-    Button,
-    Card,
-    CardItem,
-    Container,
-    Content,
-    Header,
-    Icon,
-    Left,
-    Right,
-    StyleProvider,
-    Text,
-    Thumbnail,
-    Title 
-} from 'native-base';
-
+import moment from 'moment';
+import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { Image, ListView, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Icon } from 'native-base';
 
-import getTheme from '../../../native-base-theme/components';
-import commonColor from '../../../native-base-theme/variables/commonColor';
-// import MainTabs from '../main-tabs';
+// import { 
+//     Badge,
+//     Body,
+//     Button,
+//     Card,
+//     CardItem,
+//     Container,
+//     Content,
+//     Header,
+//     Icon,
+//     Left,
+//     Right,
+//     StyleProvider,
+//     Text,
+//     Thumbnail,
+//     Title 
+// } from 'native-base';
+
+
+import { fetchQueueByDate } from '../patient-queue-list/actions';
+import PatientQueueList from '../patient-queue-list';
 
 import styles from './styles';
 
@@ -30,197 +33,79 @@ import styles from './styles';
 class HomeComponent extends React.Component {
     render() {   
         const { patients } = this.state;
-        return (
-            
-                // <Container style={{height: '100%'}}>
+        const { DayStatistics, GreetingComponent, PatientsList, TopThreePatients, StartNewConsult } = this; 
 
-                    /* {this.renderHeader()} */
-                    /* <MainTabs toggleActive={this.toggleActive}/> */
-                    // <Content style={{height: '100%', width: '100%', marginLeft: 'auto', marginRight: 'auto'}}>
-                        this.renderHomeContent(patients)
-                //     </Content>
-                // </Container>
-
-            // </StyleProvider>
-        )
-    }
-
-    renderHeader = () => {
-        return (
-            <Header>
-                <Left>
-                    <Button
-                        transparent
-                        >
-                        <Icon name="md-menu" />
-                    </Button>
-                </Left>
-
-                <Body style={styles.headerBody} >
-                    {/* Profile header */}
-                    <Title>Medician</Title>
-                </Body>
-
-                <Right>
-                    
-                </Right>
-
-
-            </Header>
-        )
-    }
-
-    renderHomeContent = (patients) => {
-        const { DayStatistics, GreetingComponent, PatientsList, ToDoList, TopThreePatients, StartNewConsult } = this; 
+        console.log("patient queue = " , this.props.patientQueue)
+        console.log("Consultation history = " , this.props.consultationHistory)
+        if(!this.props.patientQueue.isLive || !this.props.consultationHistory.isLive) {
+            return (
+                <View>
+                    <Text>LOADing..</Text>
+                </View>
+            )
+        }
         return (
             <View style={styles.homeContainer}>
                 <GreetingComponent />
-                <DayStatistics />
-                <StartNewConsult patients={patients}/>
-                <PatientsList patients={patients}/>
-                {/* <ToDoList patients={patients}/> */}
+                <View
+                    style={{width: '100%', backgroundColor: 'white', height: '85%'}}>
+                    {/* <View style={{height: '40%',}}> */}
+                        <DayStatistics />
+                        <StartNewConsult patients={patients}/>
+                    {/* </View> */}
+                    <View style={{height: '65%', backgroundColor: 'blue'}}>
+                        <PatientsList/>
+                    </View>
+
+                </View>
+                
+                {/* patients={patients}/> */}
             </View>
         )
     }
 
     DayStatistics = () => {
-
-
+        const queueCount = this.props.patientQueue.queue.length || 0;
+        const consultedCount = this.props.consultationHistory.data.length || 0;
         return (
-            // <View style={{height: '60%', width: '100%'}} >
 
-                <View style={styles.statsContainer}>
-                    <View style={styles.statsItem}>
+            <View style={styles.statsContainer}>
+                <View style={styles.statsItem}>
 
-                        <View style={styles.statsItemTop}>
-                            <View style={[styles.statsBadge, {backgroundColor: 'orange',}]} />
+                    <View style={styles.statsItemTop}>
+                        {/* <View style={[styles.statsBadge, {backgroundColor: 'orange',}]} /> */}
 
-                            <Text style={styles.statsCount}>5</Text>
-                        </View>
-
-                        <Text style={styles.statsDescription}> in queue</Text>
+                        <Text style={styles.statsCount}>{queueCount}</Text>
                     </View>
 
-                    <View style={{
-                        borderColor: '#e8e8e8',
-                        borderStyle: 'solid',
-                        borderRightWidth: 1,
-                        height: '60%'}} />
+                    <Text style={styles.statsDescription}> in queue</Text>
+                </View>
 
-                    <View style={styles.statsItem}>
+                <View style={{
+                    borderColor: '#e8e8e8',
+                    borderStyle: 'solid',
+                    borderRightWidth: 1,
+                    height: '60%'}} />
 
-                        <View style={styles.statsItemTop}>
-                            <View style={[styles.statsBadge, {backgroundColor: 'blue',}]} />
+                <View style={styles.statsItem}>
 
-                            <Text style={styles.statsCount}>8</Text>
-                        </View>
+                    <View style={styles.statsItemTop}>
+                        {/* <View style={[styles.statsBadge, {backgroundColor: 'blue',}]} /> */}
 
-                        <Text style={styles.statsDescription}> consults today</Text>
+                        <Text style={styles.statsCount}>{consultedCount}</Text>
                     </View>
 
-                    {/* <View style={styles.statsItem}>
-                        <View style={[styles.statsBadge, {backgroundColor: 'green',}]} />
-
-                        <Text style={styles.statsCount}>13</Text>
-
-                        <Text style={styles.statsDescription}> in total</Text>
-                    </View> */}
+                    <Text style={styles.statsDescription}> consults today</Text>
                 </View>
 
-                /* <View style={{
-                    width: '99%',
-                    height: '30%',
-                    flexDirection: 'row',
-                    paddingTop: 0,
-                    marginBottom: -6
-                }}>
-                    
-                    <Card>
-                        <CardItem 
-                            header
-                            transparent
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                                borderBottomWidth: 1,
-                                borderBottomColor: '#e8e8e8',
-                                borderStyle: 'solid',
-                                backgroundColor: 'rgba(82, 159, 244, 0.54)'
-                            }}
-                        >
-                            <Text>
-                                Queue
-                            </Text>
-                        </CardItem>
+                {/* <View style={styles.statsItem}>
+                    <View style={[styles.statsBadge, {backgroundColor: 'green',}]} />
 
-                        <CardItem
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                            }}    
-                        >
-                            <Text>5</Text>
-                        </CardItem>
-                    </Card>
+                    <Text style={styles.statsCount}>13</Text>
 
-                    <Card>
-                        <CardItem 
-                            header
-                            transparent
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                                borderBottomWidth: 1,
-                                borderBottomColor: '#e8e8e8',
-                                borderStyle: 'solid',
-                                backgroundColor: 'rgba(82, 159, 244, 0.54)'
-                            }}
-                        >
-                            <Text>
-                                Consulted
-                            </Text>
-                        </CardItem>
-
-                        <CardItem
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                            }}    
-                        >
-                            <Text>54</Text>
-                        </CardItem>
-                    </Card>
-
-                    <Card>
-                        <CardItem 
-                            header
-                            transparent
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                                borderBottomWidth: 1,
-                                borderBottomColor: '#e8e8e8',
-                                borderStyle: 'solid',
-                                backgroundColor: 'rgba(82, 159, 244, 0.54)'
-                            }}
-                        >
-                            <Text>
-                                Total
-                            </Text>
-                        </CardItem>
-
-                        <CardItem
-                            style={{
-                                alignItems: 'center',
-                                justifyContent:'center',
-                            }}    
-                        >
-                            <Text>59</Text>
-                        </CardItem>
-                    </Card>
-                </View>
-                 */
-            // </View>
+                    <Text style={styles.statsDescription}> in total</Text>
+                </View> */}
+            </View>
         )
     }
 
@@ -228,64 +113,66 @@ class HomeComponent extends React.Component {
         return (
             <View style={styles.greetingsWrapper}>
                 <View style={styles.greetingsContainer}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Text style={styles.greetingText}>
+                            Good Morning
+                        </Text>
+                        <Text style={{fontSize: 20, paddingLeft: 6, fontWeight: '600', color: 'white'}}>
+                            Keng Thong
+                        </Text>
+                    </View>
                     <Text style={styles.greetingText}>
-                        Good Morning
-                    </Text>
-                    <Text style={styles.greetingText}>
-                        Monday, 16th July
+                        Monday, 30th July
                     </Text>
                 </View>
             </View>
         )
     }
 
-    PatientsList = ({ patients }) => {
-        return (
-            <View style={styles.patientListWrapper}>
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderHeader={ () => {
-                        return (
-                            <View style={styles.patientListHeaderContainer}>
-                                <View style={styles.patientListHeader} >
-                                    <Text style={styles.patientListHeaderText}>
-                                        Patients in queue
-                                    </Text>
-                                </View>
-                            </View>
-                        )
-                    }}
-                    renderRow={(patient) => {
-                        return (
-                            <View style={styles.patientListItemWrapper}>
-                                <View style={styles.patientListItem}>
-                                    <View style={styles.patientImageContainer}>
-                                        {console.log("patient = " , patient)}
-                                        <Image 
-                                            style={styles.patientImage}
-                                            source={{uri: patient.imgUrl}} />
-                                    </View>
+    PatientsList = () => {
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        const dataSource = ds.cloneWithRows(this.props.patientQueue.queue);
 
-                                    <View style={styles.patientDescriptionContainer}>
-                                        <Text style={styles.patientName}>{patient.name}</Text>
-                                        <Text style={styles.patientSymptoms}>  {patient.subtitle}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        )
-                    }}
-                />
-            </View>
-        )
+        if(this.props.patientQueue.isLive) {
+
+            return (
+                <View style={styles.plContainer}>
+                    <PatientQueueList />
+                </View>
+            )
+        }
+        
+        return null;
     }
 
-    StartNewConsult = ({patients}) => {
+    StartNewConsult = () => {
+        const topPatient = this.props.patientQueue.queue[0];
         return (
             <View style={styles.startButtonContainer}>
 
                 <TouchableOpacity 
                     style={styles.startButton}
-                    onPress={() => Actions.activeSession({patient: patients[0]})}
+                    onPress={() => {
+                        let topPatient = {
+                            PatientName: "Amy",
+                            Urgency: 'Urgent',
+                            imgUrl: "https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,g_face,r_max/w_200/lady.jpg",
+                            subtitle: "Runny nose ",
+                            consultations: [
+                                {
+                                    date: "14 June 2018",
+                                    symptoms: "Flu, fever",
+                                    description: 'He fell sick two days ago, having a severe stomach pain',
+                                    medications: ['antibiotics','panadol','chloromophomine']
+                                }
+                            ]
+                        }
+                        if(topPatient) {
+                            Actions.push('activeSession', { patient: topPatient})
+                        }
+                    }
+                        // Actions.activeSession({patient: topPatient})
+                    }
                 >
                     <Text style={styles.startButtonText}>
                         Start next Consultation
@@ -296,91 +183,56 @@ class HomeComponent extends React.Component {
         )
     }
 
-    ToDoList = ({patients}) => {
-        return (
-            <View style={styles.toDoListWrapper}>
-                {console.log("patientssss = " , patients)}
-                
-                <View style={styles.toDoListHeader}>
-                    <Text>Header</Text>
+    renderAvatar = (patient, styles) => {
+        if(patient.PatientName){
+            const avatar = patient.PatientName.split(' ').reduce(
+                ( acc, cur ) => acc += cur.charAt(0), 
+                ''
+            )
+            return (
+                <View style={styles.patientAvatarWrapper}>
+                    <Text style={styles.patientAvatarText}>
+                        {avatar}
+                    </Text>
                 </View>
-                
-                <View style={styles.toDoListContainer}>
-                    <Text>hi</Text>
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={(patient) => {
-                            return (
-                                <View>
-                                    <Text>{patient.name}</Text>
-                                </View>
-                            )
-                        }}
-                    />
-                </View>
-            </View>
-        )
-    }
-
-    TopThreePatients = ({patients}) => {
-        
-        return (
-            <Card style={{width: '98%', height: '40%'}}>
-                <CardItem 
-                    header
-                    style={{
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#e8e8e8',
-                        borderStyle: 'solid',
-                    }}>
-                    <Button 
-                        rounded 
-                        small
-                    > 
-                        <Text>Start next Consultation</Text> 
-                    </Button>
-                </CardItem>
-
-                    
-                <CardItem>
-                    <Text note>Patients in line</Text>
-                </CardItem>
-                
-                {patients.map( (patient, i) =>{
-                    return (
-                        <CardItem key={i}>
-                            <Thumbnail 
-                                source={{uri: patient.imgUrl}} 
-                                small
-                            />
-                            <Text>{patient.name}</Text>
-                            {console.log("top 3 = ",  patients)}
-                            <Right>
-                                <Icon name="arrow-forward" />
-                            </Right>
-                        </CardItem>
-                    )
-                })}
-                <CardItem footer>
-                    <Right>
-                        <Text note>
-                            View more
-                        </Text>
-                    </Right>
-                </CardItem>
-
-            </Card>
-        )
+            )
+        }
     }
 
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
         this.state = {
-            patients: this.props.patients,
-            dataSource: ds.cloneWithRows(this.props.patients),
+            patients: false, 
+            dataSource: false,
+            refreshing: false
         }
+    }
+
+    onRefresh = () => {
+        this.setState({
+            refreshing: true
+        })
+        // this.props.onRefresh('home')
+        //retrieve data from database
+        setTimeout(() => {
+            this.setState({
+                refreshing: false
+            })
+        }, 500)
+    }
+
+    toggleOpenPopOver = (patient) => {
+        Actions.patientOptions({patient, visible: true})
     }
 }
 
-export default HomeComponent;
+export default connect(
+    state => ({
+        patientQueue: state.patientQueue,
+        consultationHistory: state.consultationHistory
+    }),
+    dispatch => ({
+        fetchQueueByDate: (date) => dispatch(fetchQueueByDate(date))
+    })
+)(HomeComponent);

@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: 'white',
         borderTopWidth: 0.5,
-        marginBottom: 10,
+        // marginBottom: 10,
+        marginTop: 10
     },
     tabBarRow: {
         
